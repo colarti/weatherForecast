@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from backend import get_data
+from extractZip import extractAll
 
 st.title('Weather Forecast for the Next Days')
 
@@ -12,14 +14,14 @@ option = st.selectbox(label='Select data to view', options=['Temperature', 'Sky'
 
 st.header(f'{option} for the next {days} days in {place.title()}')
 
+extractAll()
 
-def get_data(days):
-    dates = ['2022-10-25', '2022-10-26', '2022-10-27', '2022-10-28', '2022-10-29']
-    # temp = [(-4, 8), (0, 10), (1,11), (3,15), (-2, 7)]
-    temp = [5, 7, 9, 12, 11]
-    return dates[0:days], temp[0:days]
+if len(place, days, option) != 0:
+    data = get_data(place)
+    
+    for x in data:
+        content = pd.read_json(x)
+        print(content)
 
-dates, temp = get_data(days)
-
-fig = px.line(x=dates, y=temp, labels={'x':'Dates', 'y':'Temp (C)'})
-st.plotly_chart(fig)
+# fig = px.line(x=dates, y=temp, labels={'x':'Dates', 'y':'Temp (C)'})
+# st.plotly_chart(fig)
