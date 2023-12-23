@@ -5,7 +5,7 @@ from pathlib import Path
 
 def extractAll():
     data = glob.glob('*zip')
-    print(f'data: {data}')
+
     for x in data:
         fn = Path(x).stem
         if not os.path.exists(fn):
