@@ -16,12 +16,14 @@ st.header(f'{option} for the next {days} days in {place.title()}')
 
 extractAll()
 
-if len(place, days, option) != 0:
-    data = get_data(place)
-    
-    for x in data:
-        content = pd.read_json(x)
-        print(content)
+if len(place) != 0:
+    dates, info = get_data(place, days, option)
+    # print(f'dates: {dates}    info:{info}')
 
-# fig = px.line(x=dates, y=temp, labels={'x':'Dates', 'y':'Temp (C)'})
-# st.plotly_chart(fig)
+    if option == 'Temperature':
+        fig = px.line(x=dates, y=info, labels={'x':'Dates', 'y':'Temp (C)'})
+        st.plotly_chart(fig)
+            
+    if option == 'Sky':
+        for d, x in zip(dates, info):
+            st.image(image=f'.\\sky_images\\{x.lower()}.png', caption=d, width=100, use_column_width=100)
